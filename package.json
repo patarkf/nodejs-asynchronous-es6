@@ -1,0 +1,15 @@
+{
+  "name": "nodejs-asynchronous-es6",
+  "version": "1.0.0",
+  "description": "A little guide with testable examples to start learning Javascript promises, generators and async/await, focusing on the Node.js ecosystem.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patrick Ferreira",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
+}
