@@ -104,6 +104,27 @@ p2.then(result => console.log(result));
 p2.catch(error => console.error(error));
 
 /**
+ * Another examples showing how to pass data through the promise callbacks.
+ */
+let p = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(100);
+    }, 2000);
+})
+
+p.then(result => console.log(result));
+setTimeout(() => p.then(result => console.log(result *   20)), 4000);
+
+
+/**
+ * The example below shows how we use a promise and .then another promise that will
+ * only be settled once the returned promise also settles.
+ */
+request(url)
+    .then(response => request(jsonTestUrl))
+    .then(response => console.log(response));
+
+/**
  * Sometimes life can be simple. When you already know the value a promise should be 
  * fulfilled - or similarly, if you already know the rejection reason, you can use the
  * promises as the examples below.
