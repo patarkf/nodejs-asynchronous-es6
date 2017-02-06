@@ -125,3 +125,59 @@ function* trailmix() {
 console.log([...trailmix()]);
 
 // [0, 1, 2, 4, 6, 8, 10, 6, 9, 12, 15, 'w', 'e', 'e', 'k', 'e', 'n', 'd']
+
+/**
+ * Besides iterating over trailmix as we've already covered using '[...trailmix()]', 'for 
+ * value of trailmix()' and 'Array.from(trailmix())', we could use the generator returned
+ * by trailmix() directly, and iterate over that. But trailmix() was an overcomplicated
+ * showcase of yield*, let's go back to the side-effects generator for this one:
+ */
+function* generator() {
+  yield 'w';
+  console.log('e');
+  yield 'e';
+  console.log('k');
+  yield 'e';
+  console.log('n');
+  yield 'd';
+  console.log('!');
+}
+
+let g = generator();
+
+while (true) {
+  let item = g.next();
+  if (item.done) {
+    break;
+  }
+  console.log(item.value);
+}
+
+/**
+ * If you’re confused about why the '!' is printed even though there are no more yield expressions after it, 
+ * that’s because g.next() doesn’t know that. The way it works is that each time its called, it executes the 
+ * method until a yield expression is reached, emits its value and suspends execution. The next time g.next() 
+ * is called, the execution is resumed from where it left off (the last yield expression), until the next yield 
+ * expression is reached. When no yield expression is reached, the generator returns { done: true }, signaling 
+ * that the sequence has ended. At this point, the console.log('!') statement has been already executed, though.
+ * 
+ * Whenever, .next() is called on a generator, there's four "events" that wil suspend execution in the generator,
+ * returning an IteratorResult to the caller of .next()
+ * 
+ * - A 'yield' expression returning the next value in the sequence;
+ * - A 'return' statement returning the last value in the seqeunce;
+ * - A 'throw' statement halts execution in the generator entirely;
+ * - Reaching the end of the generator function signals { done: true }
+ * 
+ * Once a generator 'g' ended iterating over a sequence, subsequent calls to 'g.next()' will have no effect and
+ * just return { done: true }
+ */
+function* generator () {
+  yield 'only'
+}
+
+var g = generator();
+
+console.log(g.next()); // <- { done: false, value: 'only' }
+console.log(g.next()); // <- { done: true }
+console.log(g.next()); // <- { done: true }
