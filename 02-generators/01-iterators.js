@@ -64,4 +64,30 @@ for (let value of myIterable) {
 
 // or
 
-[...myIterable]
+[...myIterable];
+
+/**
+ * Another important thing to say here is that JavaScript has a lot of built-in Iterables
+ * such as String, Array, TypedArray, Map and Set; all of them have the Symbol.iterator 
+ * method. Listed below some syntaxes expecting iterables: 
+ */
+
+// 1# Example
+for (let value of ["a", "b", "c"]) {
+    console.log(value); // "a", "b", "c"
+}
+
+// 2# Example
+[..."abc"] // ["a", "b", "c"]
+
+// #3 Example
+function* gen() {
+    yield* ["a", "b", "c"];
+}
+gen().next(); // { value:"a", done:false }
+
+// #4 Example
+let items = new Set([4, 5, 6]);
+for (let item of items) {
+    console.log(item); // 4, 5, 6
+}
