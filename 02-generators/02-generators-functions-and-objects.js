@@ -1,5 +1,5 @@
 /**
- * 01 - Generators functions and objects
+ * 02 - Generators functions and objects
  *
  * Generator is a function which returns generator objects, that can then be iterated using
  * any of kind of loops. Generator function allow you to declare a special kind of iterator.
