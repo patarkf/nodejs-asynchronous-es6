@@ -48,6 +48,67 @@ g.next();
 console.log(g.next('[Me] Will us have an amazing weekend or will we have to work?').value)
 
 /**
- * Randomly dropping g.next() feels like a very dirty coding practice, though. 
- * What else could we do? We could flip responsibilities around.
+ * Inversion of Control:
+ * 
+ * We could have the Genie be in control, and have the generator ask the questions.
+ * How would that look like? At first, you might think that the code below is
+ * unconventional, but in fact, most libraries build around generators work by
+ * inventing responsibility. 
+ * 
+ * On this way, letting the generator deal with the flow control means you can just worry
+ * about the thing you want to iterate over, and you can delegate how to itereate over it.
+ */
+function* chat() {
+  yield '[Me] Will ES6 die a painful death?';
+  yield '[Me] How youuu doing?';
+}
+
+let g = chat();
+while (true) {
+  let question = g.next();
+  if (question.done) {
+    break;
+  }
+
+  console.log(question.value);
+  console.log('[Genie] ' + answer());
+  
+  // <- '[Me] Will ES6 die a painful death?'
+  // <- '[Genie] Very doubtful'
+  // <- '[Me] How youuu doing?'
+  // <- '[Genie] My reply is no'
+}
+
+/**
+ * Dealing with asynchronous flows.
+ */
+function genie (questions) {
+  let g = questions();
+  pull();
+  function pull () {
+    let question = g.next();
+    if (question.done) {
+      return;
+    }
+    ask(question.value, pull);
+  }
+
+  function ask (q, next) {
+    xhr('https://computer.genie/?q=' + encodeURIComponent(q), got);
+    function got (err, res, body) {
+      if (err) {
+        // todo
+      }
+      console.log(q);
+      console.log('[Genie] ' + body.answer);
+      
+      next();
+    }
+  }
+}
+
+/**
+ * Even though we’ve just made our genie method asynchronous and are now using an API to fetch
+ * responses to the user’s questions, the way the consumer uses the genie library by passing a 
+ * questions generator function remains unchanged.
  */
