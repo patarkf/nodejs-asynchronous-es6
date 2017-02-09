@@ -9,6 +9,10 @@
   "author": "Patrick Ferreira",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.4.7",
+    "hget": "^3.1.0",
+    "marked": "^0.3.6",
+    "marked-terminal": "^2.0.0",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
   }

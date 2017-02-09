@@ -71,3 +71,6 @@ request(uri)
     .then(res => {})
     .catch(error => {});
 
+/**
+ * TODO: Talk about Promises methods, such as .all() and so on
+ */
